@@ -1,0 +1,301 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Models\Client;
+use App\Http\Requests\StoreClientRequest;
+use App\Http\Requests\UpdateClientRequest;
+use App\Models\Product;
+use Intervention\Image\Facades\Image;
+use Illuminate\Http\Request;
+
+class ClientController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        return view('frontend/pages/sellyourbags');
+
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \App\Http\Requests\StoreClientRequest  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(StoreClientRequest $request)
+    {   
+
+        $input =$request->all();
+        $ids = $request->productName;
+       //dd($ids);
+
+        //dd($input);
+      //  $condition[] = $input['productName'];
+      //  dd(count($condition));
+
+     
+      // dd('adfadfadf');
+
+    //  dd($request->all());
+        $validated = $request->validated();
+        //dd($validated);
+        // $this->validate($request, [
+
+        //     'name' => 'required'
+        // ]);
+        
+        if($request->has('id_card_image')) {
+
+
+               $image = $request->file('id_card_image');
+             //  dd($image);
+        $input['id_card_image'] = time().'.'.$image->getClientOriginalExtension();
+        
+        $destinationPath = public_path('/app-assets/images/idcard');
+        $imgFile = Image::make($image->getRealPath());
+       // dd($imgFile);
+       $imgFile->resize(150, 150, function ($constraint) {
+		    $constraint->aspectRatio();
+		})->save($destinationPath.'/'.$input['id_card_image']);
+        $destinationPath = public_path('/app-assets/images/idcard');
+       // dd($destinationPath);
+      // dd($path);
+       $pathm= $image->move($destinationPath, $input['id_card_image']);
+       $realPath =$pathm->getPathname();
+
+
+        }
+     
+        // return back()
+        // 	->with('success','Image has successfully uploaded.')
+        // 	->with('fileName',$input['id_card_image']);
+
+          // Retrieve a portion of the validated input data...
+         //$validatedData= $request->validated();
+
+         //$validatedData->save();
+            if($request->payment_method=='direct'){
+              // dd('direct');
+                $payment_name = $request->payment_full_name;
+
+                $payment_email =$request->payment_email;
+                
+            }
+            if($request->payment_method=='paypal'){
+               // dd('paypal');
+                $payment_name =$request->payment_name_paypal;
+                $payment_email =$request->payment_email_paypal;
+                //dd($payment_name,$payment_email);
+            }
+            if($request->payment_method=='cheque'){
+              //  dd('cheque');
+                $payment_name =$request->payment_full_name_cheque;
+                $payment_email =$request->payment_email_cheque;
+
+
+            }
+
+           // dd($payment_name,$payment_email);
+           // $invoice = SaleInvoice::where('invoice_no', $data['invoice_no'])->first();
+
+        $folderPath = public_path('signature/');
+
+	    $imageParts = explode(";base64,", $request->signature64);
+
+	    $imageTypeAux = explode("image/", $imageParts[0]);
+
+	    $imageType = $imageTypeAux[1];
+
+	    $imageBase64 = base64_decode($imageParts[1]);
+
+        $imageName = 'signature'.'_'.microtime().'.'.$imageType;
+
+        $file = $folderPath . $imageName;
+
+	    file_put_contents($file, $imageBase64);
+
+        // SaleInvoice::where('invoice_no', $invoice->invoice_no)->update([
+        //     'invoice_signed' => $imageName
+        // ]);
+
+         $client = new Client();
+
+         //$client->name =$request->safe(['name']);
+        $client->name =$request->input('name');
+        $client->email =$request->input('email');
+        $client->phone =$request->input('phone');
+        $client->id_card_image =$realPath;
+        $client->payment_method =$request->input('payment_method');
+        $client->payment_full_name =$payment_name;
+        $client->payment_email =$payment_email;
+        $client->signature =$imageName;
+
+       
+        $client->save();
+
+        $lastId = $client->id;
+        $condition = $input['productName'];
+        //dd($condition);
+        foreach($condition as $index => $condition){
+         //  echo $index.'</br>';
+          // dd('dfdf');
+            //for($i=0; $i<=count($request->productName)-1; $i++){
+
+           // echo $request->productName[$index].'</br>';
+                  //  if($input['productImage'][$index]->has('productImage')) {
+                    if($request->hasFile(['productImage'][$index])){
+                        //echo $index.'</br>';
+                        //dd('ere');
+                    //dd($request['productImage'][$index]);
+                       // dd('ddfdfdf');
+                       // $image = $request->file('id_card_image');        
+                $images = $request->file('productImage');
+                //dd($images);
+
+                foreach($images as $image){
+                  //  dd($image1);
+                  // $image1 = $request->file($image);
+                   $image = $image;
+             //dd($image);
+                //   $image = time().'.'.$image->getClientOriginalExtension();
+                   $imageExtention = time().'.'.$image->getClientOriginalExtension();
+                  // dd($imageExtention);
+
+                
+                   $destinationPath = public_path('/app-assets/images/products');
+                 // dd($destinationPath);
+                   $imgFile = Image::make($image->getRealPath());
+                 //  dd($imgFile);
+                //    $imgFile->resize(150, 150, function ($constraint) {
+                //        $constraint->aspectRatio();
+                //    })->save($destinationPath.'/'.$input['productImage']);
+                $imgFile->resize(150, 150, function ($constraint) {
+                           $constraint->aspectRatio();
+                       })->save($destinationPath.'/'.$imageExtention);
+                  // $destinationPath = public_path('/app-assets/images/products');
+                 //  dd();
+                  // $pathm= $image->move($destinationPath, $input['productImage'][$index]);
+                   $pathm= $image->move($destinationPath, $imageExtention);
+                  // dd($pathm);
+                   $realPathProduct =$pathm->getPathname();
+                 //  dd($realPathProduct);
+
+                   $product = new Product();
+                  
+                   $product->name = $input['productName'][$index];
+                   $product->condition = $input['productCondition'][$index];
+                   $product->price = $input['productPrice'][$index];
+                   $product->client_id =$lastId;
+                   $product->image_path = $realPathProduct;
+                  
+                   $product->save();
+
+                }
+
+               // dd($image);
+                //$input['id_card_image'] = time().'.'.$image->getClientOriginalExtension();
+
+
+
+                // $input['productImage'][$index] = time().'.'.$image->getClientOriginalExtension();
+                
+                // $destinationPath = public_path('/app-assets/images/products');
+                // $imgFile = Image::make($image->getRealPath());
+                
+                // $imgFile->resize(150, 150, function ($constraint) {
+                //     $constraint->aspectRatio();
+                // })->save($destinationPath.'/'.$input['productImage']);
+                // $destinationPath = public_path('/app-assets/images/products');
+            
+                // $pathm= $image->move($destinationPath, $input['productImage'][$index]);
+                // $realPathProduct =$pathm->getPathname();
+
+
+                }
+
+            // $product = new Product();
+            // $product->name = $input['productName'][$index];
+            // $product->condition = $input['productCondition'][$index];
+            // $product->price = $input['productPrice'][$index];
+            // $product->client_id =$lastId;
+            // $product->image_path = $realPathProduct;
+           
+            // $product->save();
+    
+           }
+
+        // foreach ($condition as $key => $condition) {
+        //     $student = new Student;
+        //     $student->name = $input['name'][$key];
+        //     $student->fname = $input['fname'][$key];
+        //     $student->rollno = $input['rollno'][$key];
+        //     $student->obtainedmarks = $input['obtainedmarks'][$key];
+        //     $student->totalmarks = $input['totalmarks'][$key];
+        //     $student->percentage = $input['percentage'][$key];
+        //     $student->save();
+        // }
+
+         // return Client::create($request->validated());
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Client  $client
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Client $client)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Models\Client  $client
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Client $client)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Http\Requests\UpdateClientRequest  $request
+     * @param  \App\Models\Client  $client
+     * @return \Illuminate\Http\Response
+     */
+    public function update(UpdateClientRequest $request, Client $client)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Client  $client
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Client $client)
+    {
+        //
+    }
+}
