@@ -152,12 +152,32 @@
             var condition_one = $('#productConditionOne').find('option:selected').val();
             var condition_two = $('#productConditionTwo').find('option:selected').val();
             var condition_three = $('#productConditionThree').find('option:selected').val();
+            $('#condition_one_error').text('');
+            $('#condition_two_error').text('');
+            $('#condition_three_error').text('');
+            let response = true;
+            if(condition_one === ''){
+                $('#condition_one_error').text('Overall Condition is required.');
+                response = false;
+            }
+            if(condition_two === ''){
+                $('#condition_two_error').text('Smell is required.');
+                response = false;
+            }
+            if(condition_three === ''){
+                $('#condition_three_error').text('Corners Rubbing is required.');
+                response = false;
+            }
 
-            $('#condition_one_' + btnIndex).val(condition_one);
-            $('#condition_two_' + btnIndex).val(condition_two);
-            $('#condition_three_' + btnIndex).val(condition_three);
-            $('#add_condition_'+btnIndex).text('Added');
-            $('#edit_unit').modal('hide');
+            if(response){
+                $('#condition_one_' + btnIndex).val(condition_one);
+                $('#condition_two_' + btnIndex).val(condition_two);
+                $('#condition_three_' + btnIndex).val(condition_three);
+                $('#add_condition_'+btnIndex).text('Added');
+                $('#edit_unit').modal('hide');
+            }
+
+
         })
         $(document).on("click", "#deleteRow", function(e) {
            e.preventDefault();

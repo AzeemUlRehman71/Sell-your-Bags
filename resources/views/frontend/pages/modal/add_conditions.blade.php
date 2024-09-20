@@ -14,6 +14,7 @@
                             <div class="col-md-12">
                                 <label class="form-label">Overall Condition</label>
                                 <select class="form-select shadow-none" aria-label="Default select example" id="productConditionOne">
+                                    <option value="">Please Select</option>
                                     <option value="A(Mint)">A(Mint)</option>
                                     <option value="AB(Excellent)">AB(Excellent)</option>
                                     <option value="B(Gently Used)">B(Gently Used)</option>
@@ -22,23 +23,28 @@
                                     <option value="D(Need Repair)">D(Need Repair)</option>
 
                                 </select>
+                                <span style="color:red" id="condition_one_error"></span>
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label">Smell</label>
                                 <select class="form-select shadow-none" aria-label="Default select example" id="productConditionTwo">
+                                    <option value="">Please Select</option>
                                     <option value="Yes">Yes</option>
                                     <option value="No">No</option>
 
                                 </select>
+                                <span style="color:red" id="condition_two_error"></span>
                             </div>
                             <div class="col-md-12">
                                 <label class="form-label">Corners Rubbing</label>
                                 <select class="form-select shadow-none" aria-label="Default select example" id="productConditionThree">
+                                    <option value="">Please Select</option>
                                     <option value="No">No</option>
                                     <option value="Minor">Minor</option>
                                     <option value="Major">Major</option>
 
                                 </select>
+                                <span style="color:red" id="condition_three_error"></span>
                             </div>
                         </div>
                     </div>
