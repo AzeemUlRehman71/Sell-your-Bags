@@ -144,6 +144,9 @@
             // Set the index dynamically in the modal's save button
             $('.save_condition').attr('data-btn-index', index);
             btnIndex = index;
+            $('#productConditionOne option:first').prop('selected', true);
+            $('#productConditionTwo option:first').prop('selected', true);
+            $('#productConditionThree option:first').prop('selected', true);
             $('#edit_unit').modal('show');
         })
 
