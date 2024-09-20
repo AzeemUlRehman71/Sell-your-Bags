@@ -27,15 +27,19 @@
 
     <!-- Invoice -->
     <div class="col-xl-12 col-md-12 col-12" style="text-align: right;">
-         @if(isset($backClient))
-         <a href="{{ route('client.view', ['id' => $backClient->id]) }}" class="btn btn-sm simple-heading-bg text-white waves-effect waves-float waves-light"><i class="fas fa-arrow-left"></i></a>
-         @endif
+        @if(isset($backClient))
+            <a href="{{ route('client.view', ['id' => $backClient->id]) }}"
+               class="btn btn-sm simple-heading-bg text-white waves-effect waves-float waves-light"><i
+                    class="fas fa-arrow-left"></i></a>
+        @endif
 
-         @if(isset($nextClient))
-         <a href="{{ route('client.view', ['id' => $nextClient->id]) }}" class="btn btn-sm simple-heading-bg text-white waves-effect waves-float waves-light"><i class="fas fa-arrow-right"></i></a>
-         @endif
-      </div>
-   <div class="col-xl-12 col-md-12 col-12">
+        @if(isset($nextClient))
+            <a href="{{ route('client.view', ['id' => $nextClient->id]) }}"
+               class="btn btn-sm simple-heading-bg text-white waves-effect waves-float waves-light"><i
+                    class="fas fa-arrow-right"></i></a>
+        @endif
+    </div>
+    <div class="col-xl-12 col-md-12 col-12">
         <div class="invoice-preview-card">
 
             <div class="row no-gutters pt-1">
@@ -46,24 +50,30 @@
 
 
                 <div class="col-md-6 d-flex justify-content-end">
-                    <a href="{{ url('/barcode-print/' . $clientDetails->id) }}" class="btn btn-info" style="margin-right: 3px;" target="_blank">Barcode <i class="fas fa-barcode nav-icon"></i></a>
-                    <a style="margin-right: 3px;" class="btn btn-warning edit_product_unit" data-bs-toggle="modal" data-bs-target="#edit_unit" data-edit_product_id="{{ $clientDetails->id }}" data-edit_client_status="{{ $clientDetails->client_status }}">Change Status</a>
-                    <a style="margin-right: 3px;" href="{{ route('client.edit', ['id' => $clientDetails->id]) }}" class="btn btn-primary">Edit</a>
+                    <a href="{{ url('/barcode-print/' . $clientDetails->id) }}" class="btn btn-info"
+                       style="margin-right: 3px;" target="_blank">Barcode <i class="fas fa-barcode nav-icon"></i></a>
+                    <a style="margin-right: 3px;" class="btn btn-warning edit_product_unit" data-bs-toggle="modal"
+                       data-bs-target="#edit_unit" data-edit_product_id="{{ $clientDetails->id }}"
+                       data-edit_client_status="{{ $clientDetails->client_status }}">Change Status</a>
+                    <a style="margin-right: 3px;" href="{{ route('client.edit', ['id' => $clientDetails->id]) }}"
+                       class="btn btn-primary">Edit</a>
                     <form method="post" action="{{ route('print', ['id' => $clientDetails->id]) }}">
                         @csrf
                         <button class="btn simple-heading-bg text-white" type="submit" formtarget="_blank">PRINT
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                                stroke-linejoin="round" class="feather feather-printer">
+                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                 stroke-linejoin="round" class="feather feather-printer">
                                 <polyline points="6 9 6 2 18 2 18 9"></polyline>
-                                <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
+                                <path
+                                    d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path>
                                 <rect x="6" y="14" width="12" height="8"></rect>
-                            </svg></button>
+                            </svg>
+                        </button>
                     </form>
                 </div>
             </div>
 
-            <hr class="invoice-spacing" style="margin-top: 10px" />
+            <hr class="invoice-spacing" style="margin-top: 10px"/>
 
             <div class="row no-gutters simple-heading-bg">
                 <div class="col-md-12 d-flex justify-content-left">
@@ -73,7 +83,7 @@
             </div>
 
             <div class="row no-gutters d-flex background-blue justify-content-center"
-                style="background-color: #EAF2FA !important;">
+                 style="background-color: #EAF2FA !important;">
                 <div class="col-md-4 pl-5 pt-2">
                     <label class="fw-bolder black">FULL NAME</label>
                     <p>{{ $clientDetails->name }}</p>
@@ -96,7 +106,8 @@
                     <label class="fw-bolder black">ID CARD</label>
 
                     @if ($clientDetails->id_card_image)
-                        <p><img src="{{ asset('idcard/' . $clientDetails->id_card_image) }}" style="height: 100px; width:120px;" id="idimg">
+                        <p><img src="{{ asset('idcard/' . $clientDetails->id_card_image) }}"
+                                style="height: 100px; width:120px;" id="idimg">
                         </p>
                     @else
                         <p>No Image Found
@@ -109,7 +120,6 @@
                     <p>{{ $clientDetails->client_status }}</p>
                 </div>
 
-                
 
                 {{--<div class="col-md-2 pl-5 pt-2">
                     <label class="fw-bolder black">Tagged</label>
@@ -182,91 +192,111 @@
                         <div class="card-datatable table-responsive">
                             <table class="table table-bordered">
                                 <thead>
-                                    <tr>
-                                        <th>SKU</th>
-                                        <th>Image</th>
-                                        <th>Name</th>
-                                        <th>Condition</th>
-                                        <th>Price</th>
-                                        <th class="text-center">Tagged</th>
-                                        <th class="text-center">Condition Report</th>
+                                <tr>
+                                    <th>SKU</th>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Condition</th>
+                                    <th>Price</th>
+                                    <th class="text-center">Tagged</th>
+                                    <th class="text-center">Condition Report</th>
 
-                                    </tr>
+                                </tr>
                                 </thead>
                                 <tbody>
-                                    @if ($clientDetails->product->count())
-                                        @foreach ($clientDetails->product as $item)
-                                            <tr>
-                                                <td>{{ $item->sku }}</td>
-                                                <td>
+                                @if ($clientDetails->product->count())
+                                    @foreach ($clientDetails->product as $item)
+                                        <tr>
+                                            <td>{{ $item->sku }}</td>
+                                            <td>
                                                 @if (count($item->images()))
                                                     @foreach ($item->images() as $img)
                                                         <img src="{{ asset('product/' . $img) }}"
-                                                            imgname="{{ asset('product/' . $img) }}" class="img-fluid" style="height: 75px; width:80px; margin: 5px; object-fit: cover;" id="tableimg" />
+                                                             imgname="{{ asset('product/' . $img) }}" class="img-fluid"
+                                                             style="height: 75px; width:80px; margin: 5px; object-fit: cover;"
+                                                             id="tableimg"/>
                                                     @endforeach
                                                 @else
                                                     <span class="fw-bold"> No Image found</span>
                                                 @endif
-                                                </td>
+                                            </td>
 
-                                                <td>{{ $item->name }}</td>
-                                                <td>{{ $item->condition }}</td>
-                                                <td>{{ $item->price }}</td>
-                                                <td class="text-center"><input type="checkbox" onclick="taggedProductItem({{ $item->id }})" {{ $item->tagged == 1 ? 'checked' : '' }}></td>
-                                                <td class="text-center">
-                                                    <button class="btn btn-sm btn-primary" style="padding: 0.486rem .5rem;" onclick="fetchConditionReport({{ $item->id }})" data-bs-toggle="tooltip" data-bs-placement="top" title="Condition Report"> <i class="fas fa-pen-to-square"></i></button>
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    @else
-                                        <tr>
-                                            <td colspan="3">
-                                                <center>No Record Found</center>
+                                            <td>{{ $item->name }}</td>
+                                            <td>
+                                                <ul>
+                                                    <li>{{ $item->condition }}</li>
+                                                    <li>{{ $item->condition_two }}</li>
+                                                    <li>{{ $item->condition_three }}</li>
+                                                </ul>
+                                            </td>
+                                            <td>{{ $item->price }}</td>
+                                            <td class="text-center"><input type="checkbox"
+                                                                           onclick="taggedProductItem({{ $item->id }})" {{ $item->tagged == 1 ? 'checked' : '' }}>
+                                            </td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm btn-primary" style="padding: 0.486rem .5rem;"
+                                                        onclick="fetchConditionReport({{ $item->id }})"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"
+                                                        title="Condition Report"><i class="fas fa-pen-to-square"></i>
+                                                </button>
                                             </td>
                                         </tr>
-                                    @endif
+                                    @endforeach
+                                @else
+                                    <tr>
+                                        <td colspan="3">
+                                            <center>No Record Found</center>
+                                        </td>
+                                    </tr>
+                                @endif
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
             </div>
- <div class="modal fade" id="demoModal" tabindex="-1" role="dialog" aria-labelledby="demoModalLabel" aria-hidden="true" style="background: #111111cc;">
-    <div class="modal-dialog" role="document" style="max-width: 500px;top: 30%;bottom: 0;margin: 0 auto;">
-        <div class="modal-content">
-        <div class="modal-header">
-                <button type="button" class="btn" data-dismiss="modal" aria-label="Close" style="margin-left: auto;font-size: 26px;padding: 0;" id="closemodal">
-                    X
-                </button>
+            <div class="modal fade" id="demoModal" tabindex="-1" role="dialog" aria-labelledby="demoModalLabel"
+                 aria-hidden="true" style="background: #111111cc;">
+                <div class="modal-dialog" role="document" style="max-width: 500px;top: 30%;bottom: 0;margin: 0 auto;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn" data-dismiss="modal" aria-label="Close"
+                                    style="margin-left: auto;font-size: 26px;padding: 0;" id="closemodal">
+                                X
+                            </button>
+                        </div>
+                        {{--<div class="modal-body">
+                            <div class="form-group">
+                                <img src="{{ asset('product/' . $item->image_path) }}"style="width: 100%;height: auto;object-fit: contain;" class="tableimg"/>--}}
+                        @if (isset($item))
+                            <img src="{{ asset('product/' . $item->image_path) }}"
+                                 style="width: 100%;height: 350px;object-fit: cover;" class="tableimg"/>
+                        @endif
+                        {{--</div>
+                    </div>--}}
+                    </div>
+                </div>
             </div>
-            {{--<div class="modal-body">
-                <div class="form-group">
-                    <img src="{{ asset('product/' . $item->image_path) }}"style="width: 100%;height: auto;object-fit: contain;" class="tableimg"/>--}}
-                    @if (isset($item))
-                        <img src="{{ asset('product/' . $item->image_path) }}"style="width: 100%;height: 350px;object-fit: cover;" class="tableimg"/>
-                    @endif
-                {{--</div>
-            </div>--}}
-        </div>
-    </div>
-</div>
-<div class="modal fade" id="demoModal1" tabindex="-1" role="dialog" aria-labelledby="demoModalLabel" aria-hidden="true" style="background: #111111cc;">
-    <div class="modal-dialog" role="document" style="max-width: 400px;top: 30%;bottom: 0;margin: 0 auto;">
-        <div class="modal-content">
-        <div class="modal-header">
-                <button type="button" class="btn" data-dismiss="modal" aria-label="Close" style="margin-left: auto;font-size: 26px;padding: 0;" id="closemodal">
-                    X
-                </button>
+            <div class="modal fade" id="demoModal1" tabindex="-1" role="dialog" aria-labelledby="demoModalLabel"
+                 aria-hidden="true" style="background: #111111cc;">
+                <div class="modal-dialog" role="document" style="max-width: 400px;top: 30%;bottom: 0;margin: 0 auto;">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="btn" data-dismiss="modal" aria-label="Close"
+                                    style="margin-left: auto;font-size: 26px;padding: 0;" id="closemodal">
+                                X
+                            </button>
+                        </div>
+                        {{--<div class="modal-body">
+                            <div class="form-group">--}}
+                        {{--<img src="{{ asset('idcard/' . $clientDetails->id_card_image) }}" style="width: 100%;height: auto;object-fit: contain;" id="idimg">--}}
+                        <img src="{{ asset('idcard/' . $clientDetails->id_card_image) }}"
+                             style="width: 100%;height: 240px;object-fit: cover;" id="idimg">
+                        {{--</div>
+                    </div>--}}
+                    </div>
+                </div>
             </div>
-            {{--<div class="modal-body">
-                <div class="form-group">--}}
-                    {{--<img src="{{ asset('idcard/' . $clientDetails->id_card_image) }}" style="width: 100%;height: auto;object-fit: contain;" id="idimg">--}}
-                    <img src="{{ asset('idcard/' . $clientDetails->id_card_image) }}" style="width: 100%;height: 240px;object-fit: cover;" id="idimg">
-                {{--</div>
-            </div>--}}
-        </div>
-    </div>
-</div>
             <div class="row invoice-sales-total-wrapper mt-1">
                 {{-- <div class="col-md-6 order-md-1 order-2 mt-md-0 mt-3">
                     <p class="card-text mb-0"><span class="fw-bold">Salesperson:</span> <span class="ms-75">Alfie Solomons</span></p>
@@ -288,7 +318,8 @@
                         {{-- <hr class="my-50"> --}}
                         <div class="d-flex justify-content-center">
                             <p class="invoice-total-title fw-bolder black fs-3">Total: </p>
-                            <p class="invoice-total-amount fw-bolder black mx-1 fs-3"> ${{ $clientDetails->total_amount }}
+                            <p class="invoice-total-amount fw-bolder black mx-1 fs-3">
+                                ${{ $clientDetails->total_amount }}
                             </p>
                         </div>
                     </div>
@@ -303,7 +334,7 @@
             </div>
 
             <div class="row no-gutters d-flex background-blue justify-content-center"
-                style="background-color: #EAF2FA !important;">
+                 style="background-color: #EAF2FA !important;">
                 <div class="col-md-4 col-md-4 pl-5 pt-2">
                     <label class="fw-bolder black">PAYOUT</label>
                     <p>{{ $clientDetails->payment_method }}</p>
@@ -319,7 +350,7 @@
             </div>
             {{-- @if ($clientDetails->payment_method == 'direct') --}}
             <div class="row no-gutters d-flex background-blue justify-content-center"
-                style="background-color: #d3eaff !important;">
+                 style="background-color: #d3eaff !important;">
                 @if ($clientDetails->payment_direct_bank_name)
                     <div class="col-md-3 pl-5 pt-2">
                         <label class="fw-bolder black">BANK NAME</label>
@@ -349,7 +380,7 @@
             {{-- @endif --}}
 
             <div class="row my-2">
-               <p><b>Note: </b> {{ $clientDetails->note }}</p>
+                <p><b>Note: </b> {{ $clientDetails->note }}</p>
             </div>
 
             <div class="row no-gutters justify-content-center  py-5 px-4" style="background-color:#fff;">
@@ -367,7 +398,9 @@
                 @endif
 
                 <p class="text-end fw-bold">
-                    <label class="fw-bolder black">Date:</label> {{ date('m-d-Y', strtotime($clientDetails->created_at)) }}<br>
+                    <label
+                        class="fw-bolder black">Date:</label> {{ date('m-d-Y', strtotime($clientDetails->created_at)) }}
+                    <br>
                     <label class="fw-bolder black">Created by:</label> {{ $clientDetails->user_create }}
                 </p>
             </div>
@@ -392,7 +425,7 @@
     {{-- Include Edit Unit Modal --}}
     {{-- @include('backend.client.modal.edit_product_unit') --}}
 
-    
+
     @include('backend.client.modal.edit_product_unit')
 
     @include('backend.client.modal.condition_report_modal')
@@ -400,120 +433,117 @@
 @endsection
 
 @section('jsOutside')
-<script>
-$(document).on('click', '#tableimg', function (event) {
-    var source = $(this).attr('imgname');
-    $('.tableimg').attr('src', source);
-    $('#demoModal').modal("show");
-});
-$(document).on('click', '#idimg', function (event) {
-    $('#demoModal1').modal("show");
-});
-$(document).on('click', '#closemodal', function (event) {
-    $('#demoModal1').modal("hide");
-    $('#demoModal').modal("hide");
-});
+    <script>
+        $(document).on('click', '#tableimg', function (event) {
+            var source = $(this).attr('imgname');
+            $('.tableimg').attr('src', source);
+            $('#demoModal').modal("show");
+        });
+        $(document).on('click', '#idimg', function (event) {
+            $('#demoModal1').modal("show");
+        });
+        $(document).on('click', '#closemodal', function (event) {
+            $('#demoModal1').modal("hide");
+            $('#demoModal').modal("hide");
+        });
 
-</script>
-<script>
-
-
+    </script>
+    <script>
 
 
+    </script>
 
-</script>
+    <script>
+        //    var url = "{{ url('pos/tagged') }}";
+        //    function handleTagged(id) {
+        //       $.get(url + '/' + id, function () {
+        //          // alert('Tagged successfully');
+        //       });
+        //    }
 
-<script>
-//    var url = "{{ url('pos/tagged') }}";
-//    function handleTagged(id) {
-//       $.get(url + '/' + id, function () {
-//          // alert('Tagged successfully');
-//       });
-//    }
+        function taggedProductItem(id) {
+            var url = "{{ url('pos/product-item-tagged') }}";
+            $.get(url + '/' + id, function () {
+                // alert('Tagged successfully');
+            });
+        }
 
-   function taggedProductItem(id) {
-       var url = "{{ url('pos/product-item-tagged') }}";
-       $.get(url + '/' + id, function () {
-         // alert('Tagged successfully');
-      });
-   }
+        $(document).on('click', '#condition-form-save', function (event) {
+            var identifier = $('.nav-link.active').data('identifier');
 
-   $(document).on('click', '#condition-form-save', function (event) {
-        var identifier = $('.nav-link.active').data('identifier');
+            var url = "{{ url('pos/save-condition-reoprt') }}";
+            var serializeData = $('#' + identifier + '-form').serialize();
 
-        var url = "{{ url('pos/save-condition-reoprt') }}";
-        var serializeData = $('#' + identifier + '-form').serialize();
+            var _token = "{{ csrf_token() }}";
+            serializeData = serializeData + '&_token=' + _token;
 
-        var _token = "{{ csrf_token() }}";
-        serializeData = serializeData + '&_token=' + _token;
-
-        $.post(url, serializeData, function (res) {
-            Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: $('#' + identifier + '-condition-report-title').text() + ' Saved Successfully',
-                showConfirmButton: false,
-                timer: 2000,
-                customClass: {
-                    confirmButton: 'btn btn-primary'
-                },
-                buttonsStyling: false
+            $.post(url, serializeData, function (res) {
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'success',
+                    title: $('#' + identifier + '-condition-report-title').text() + ' Saved Successfully',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false
+                });
             });
         });
-    });
 
-    function fetchConditionReport(clientId) {
-        var url = "{{ url('pos/fetch-condition-report') }}";
+        function fetchConditionReport(clientId) {
+            var url = "{{ url('pos/fetch-condition-report') }}";
 
-        $.get(url + '/' + clientId, function(res) {
-            $('#first-inspection-container').html(res.first_inspection);
-            $('#second-inspection-container').html(res.second_inspection);
-            $('#third-inspection-container').html(res.third_inspection);
+            $.get(url + '/' + clientId, function (res) {
+                $('#first-inspection-container').html(res.first_inspection);
+                $('#second-inspection-container').html(res.second_inspection);
+                $('#third-inspection-container').html(res.third_inspection);
 
-            $('#condition-report-modal').modal('show');
-        });
-    }
+                $('#condition-report-modal').modal('show');
+            });
+        }
 
-   function showInput(that, ifValue, id) {
-      if ($(that).val() == ifValue) {
-         $('#' + id).show();
-      } else {
-         $('#' + id).val('');
-         $('#' + id).hide();
-      }
-   }
+        function showInput(that, ifValue, id) {
+            if ($(that).val() == ifValue) {
+                $('#' + id).show();
+            } else {
+                $('#' + id).val('');
+                $('#' + id).hide();
+            }
+        }
 
-    function fetchComparisonReport() {
-        var url = "{{ url('pos/fetch-comparison-report') }}";
-        var productId = $('.po-product-id').val();
-        $.get(url + '/' + productId, function(res) {
-            console.log(res);
+        function fetchComparisonReport() {
+            var url = "{{ url('pos/fetch-comparison-report') }}";
+            var productId = $('.po-product-id').val();
+            $.get(url + '/' + productId, function (res) {
+                console.log(res);
 
-            $('.condition-report').hide();
-            $('#condition-form-save').hide();
-            $('#condition-report-title').text('Condition - Comparison Report');
+                $('.condition-report').hide();
+                $('#condition-form-save').hide();
+                $('#condition-report-title').text('Condition - Comparison Report');
 
-            $('#comparison-report-btn').hide();
-            $('#condition-report-btn').show();
+                $('#comparison-report-btn').hide();
+                $('#condition-report-btn').show();
 
-            $('#comparison-report').html(res.comparison_report);
-            $('#comparison-report').show();
-        });
-    }
+                $('#comparison-report').html(res.comparison_report);
+                $('#comparison-report').show();
+            });
+        }
 
-    function showConditionReport() {
-        $('.condition-report').show();
-        $('#condition-form-save').show();
-        $('#condition-report-title').text('Condition Report');
+        function showConditionReport() {
+            $('.condition-report').show();
+            $('#condition-form-save').show();
+            $('#condition-report-title').text('Condition Report');
 
-        $('#comparison-report-btn').show();
-        $('#condition-report-btn').hide();
+            $('#comparison-report-btn').show();
+            $('#condition-report-btn').hide();
 
-        $('#comparison-report').hide();
-    }
+            $('#comparison-report').hide();
+        }
 
-    
-</script>
+
+    </script>
 
     {{-- Write script,link external JS files --}}
     {{-- Include Custom js File --}}

@@ -435,7 +435,7 @@ class ClientController extends Controller
         $products = $request->products;
 
         $newArray = collect($products)->reject(function ($product) {
-            return is_null($product["'name'"]) && is_null($product["'condition'"]) && is_null($product["'price'"]);
+            return is_null($product["'name'"]) && is_null($product["'condition'"]) && is_null($product["'condition_two'"]) && is_null($product["'condition_three'"]) && is_null($product["'price'"]);
         });
 
         foreach ($newArray as $product) {
@@ -459,6 +459,8 @@ class ClientController extends Controller
             $productNew->name = $product["'name'"] ?? '';
             // ;
             $productNew->condition = $product["'condition'"] ?? '';
+            $productNew->condition_two = $product["'condition_two'"] ?? '';
+            $productNew->condition_three = $product["'condition_three'"] ?? '';
             $productNew->price = $product["'price'"];
             $productNew->client_id = $lastId;
             // $productNew->image_path = $realPath ?? '';
@@ -566,7 +568,7 @@ class ClientController extends Controller
 
             $product = Product::where('id', $request->edit_product_id_value)->first();
             $string = $product->image_path ? json_decode($product->image_path, true)[0] : "";
-            
+
             //Get the product folder name i-e extract from it
             $token = strtok($string, "/"); // Output
             $path = realpath("product/" . $token);
@@ -977,7 +979,7 @@ class ClientController extends Controller
                 $svg = $generator->render_svg('code-128', $item->sku, ['sx' => 1, 'sy' => .4, 'ts' => 10, 'pt' => 5, 'pl' => 2, 'pr' => 2]);
 
                 file_put_contents(public_path('/barcode/' . $item->sku . '.svg'), $svg);
-        
+
             }
         }
 
@@ -1032,7 +1034,7 @@ class ClientController extends Controller
         //     'eb_cb_bag_out_of_shapes', 'eb_cb_signs_on_handles_straps', 'eb_cb_cracking', 'eb_cb_repainted',
         //     'hw_cb_color', 'hw_cb_excellent', 'hw_cb_discoloration', 'hw_cb_scrateches',
         //     'hw_cb_sign_of_use', 'in_cb_smell', 'in_cb_clean_excellent', 'in_cb_stains',
-        //     'in_cb_tears', 'in_cb_no_make_in', 'in_cb_date_code', 
+        //     'in_cb_tears', 'in_cb_no_make_in', 'in_cb_date_code',
         // ];
 
         $data = $request->except([
@@ -1139,5 +1141,5 @@ class ClientController extends Controller
     }
 
 
-    
+
 }

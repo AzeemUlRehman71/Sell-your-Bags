@@ -91,18 +91,14 @@
                   />
                 </div>
                 <div class="col-md-3">
-                  <select
-                    class="form-select shadow-none"
-                    aria-label="Default select example" name="products[` + i + `]['condition']" id="productCondition` + i + `"
-                  >
-                  <option value="">Conditon Rank</option>
-                                <option value="A(Mint)">A(Mint)</option>
-                                <option value="AB(Ecellent)">AB(Ecellent)</option>
-                                <option value="B(Gently Used)">B(Gently Used)</option>
-                                <option value="BC(Used)">BC(Used)</option>
-                                <option value="C(Well Used)">C(Well Used)</option>
-                                <option value="D(Need Prayers)">D(Need Prayers)</option>
-                  </select>
+                  <a class="btn btn-success btn-sm bg-add edit_unit_modal"  id="add_condition_` + i + `"  data-product-information-index="` + i + `">Add Condition</a>
+
+                               <input type="hidden" name="products[` + i + `]['condition']" id="condition_one_` + i + `" value="">
+                               <input type="hidden" name="products[` + i + `]['condition_two']" id="condition_two_` + i + `" value="">
+                               <input type="hidden" name="products[` + i + `]['condition_three']" id="condition_three_` + i + `" value="">
+
+
+
                 </div>
                 <div class="col-md-2">
                   <input
@@ -130,6 +126,8 @@
                 grand_calculation();
             });
 
+
+
             filepondInit(event);
 
             $('#productImage' + i).on('FilePond:processfile', function(e) {
@@ -137,6 +135,30 @@
                 document.getElementById('productPrice' + i).required = true;
             });
         });
+
+
+        btnIndex = 0;
+        $(document).on('click','.edit_unit_modal',function (){
+            var index = $(this).data('product-information-index');
+            console.log("index for modal" + index);
+            // Set the index dynamically in the modal's save button
+            $('.save_condition').attr('data-btn-index', index);
+            btnIndex = index;
+            $('#edit_unit').modal('show');
+        })
+
+        $(document).on('click', '.save_condition', function () {
+            console.log("index for btn-index: " + btnIndex);
+            var condition_one = $('#productConditionOne').find('option:selected').val();
+            var condition_two = $('#productConditionTwo').find('option:selected').val();
+            var condition_three = $('#productConditionThree').find('option:selected').val();
+
+            $('#condition_one_' + btnIndex).val(condition_one);
+            $('#condition_two_' + btnIndex).val(condition_two);
+            $('#condition_three_' + btnIndex).val(condition_three);
+            $('#add_condition_'+btnIndex).text('Added');
+            $('#edit_unit').modal('hide');
+        })
         $(document).on("click", "#deleteRow", function(e) {
            e.preventDefault();
             var len = $("#newRecord .abc").length;
@@ -308,7 +330,7 @@
 //                $(".spinner-border").removeClass("d-none");
 //                $(".submit").attr("disabled", true);
 //                $(".btn-txt").text("Processing ...");
-		
+
 
 		event.preventDefault();
                 if ($('#payment_direct_account_number').val() != $('#payment_direct_re_enter_account_number').val()) {
@@ -514,7 +536,7 @@
 
         }
 	// });
-	
+
 
 	$( "#payment_direct_re_enter_account_number" ).on( "blur", function() {
             if ($('#payment_direct_account_number').val() != $(this).val()) {
