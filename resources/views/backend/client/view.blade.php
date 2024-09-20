@@ -224,9 +224,9 @@
                                             <td>{{ $item->name }}</td>
                                             <td>
                                                 <ul>
-                                                    <li>{{ $item->condition }}</li>
-                                                    <li>{{ $item->condition_two }}</li>
-                                                    <li>{{ $item->condition_three }}</li>
+                                                    <li><b>Overall Condition :</b> {{ $item->condition }}</li>
+                                                    <li><b>Smell:</b> {{ $item->condition_two }}</li>
+                                                    <li><b>Corners Rubbing:</b> {{ $item->condition_three }}</li>
                                                 </ul>
                                             </td>
                                             <td>{{ $item->price }}</td>
