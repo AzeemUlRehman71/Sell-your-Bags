@@ -198,7 +198,7 @@
                                     <th>Name</th>
                                     <th>Condition</th>
                                     <th>Price</th>
-                                    <th class="text-center">Tagged</th>
+                                    <th class="text-center">Status</th>
                                     <th class="text-center">Condition Report</th>
 
                                 </tr>
@@ -230,8 +230,27 @@
                                                 </ul>
                                             </td>
                                             <td>{{ $item->price }}</td>
-                                            <td class="text-center"><input type="checkbox"
-                                                                           onclick="taggedProductItem({{ $item->id }})" {{ $item->tagged == 1 ? 'checked' : '' }}>
+                                            <td class="text-center" style="width: 23%;">
+
+                                                <select class="form-select shadow-none" data-product-id="{{$item->id}}"
+                                                        aria-label="Default select example"
+                                                        id="productInformationStatus">
+                                                    <option value="">Select Status</option>
+                                                    <option value="Item Received/Delivered" {{ $item->status === 'Item Received/Delivered' ? 'selected' : '' }}>Item Received/Delivered
+                                                    </option>
+                                                    <option value="Item Under Discussion" {{ $item->status === 'Item Under Discussion' ? 'selected' : '' }}>Item Under Discussion</option>
+                                                    <option value="Authentication in Process" {{ $item->status === 'Authentication in Process' ? 'selected' : '' }}>Authentication in
+                                                        Process
+                                                    </option>
+                                                    <option value="Authentication Completed" {{ $item->status === 'Authentication Completed' ? 'selected' : '' }}>Authentication Completed
+                                                    </option>
+                                                    <option value="Rejected" {{ $item->status === 'Rejected' ? 'selected' : '' }}>Rejected</option>
+                                                    <option value="Fake" {{ $item->status === 'Fake' ? 'selected' : '' }}>Fake</option>
+                                                    <option value="Item Returned" {{ $item->status === 'Item Returned' ? 'selected' : '' }}>Item Returned</option>
+
+                                                </select>
+{{--                                                <input type="checkbox"--}}
+{{--                                                       onclick="taggedProductItem({{ $item->id }})" {{ $item->tagged == 1 ? 'checked' : '' }}>--}}
                                             </td>
                                             <td class="text-center">
                                                 <button class="btn btn-sm btn-primary" style="padding: 0.486rem .5rem;"
@@ -542,6 +561,46 @@
             $('#comparison-report').hide();
         }
 
+        $(document).on('change', '#productInformationStatus', function (event) {
+
+            var status = $(this).find('option:selected').val();
+            if(status === ''){
+                Swal.fire({
+                    position: 'top-end',
+                    icon: 'warning',
+                    title: 'Please select status.',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    customClass: {
+                        confirmButton: 'btn btn-primary'
+                    },
+                    buttonsStyling: false
+                });
+            }else {
+
+                var id = $(this).data('product-id');
+                var request = {"status": status, "id": id};
+
+
+                var url = "{{ url('pos/product-item-tagged') }}";
+                $.get(url + '/' + id,request, function (res) {
+                    debugger;
+                    if (res == 1) {
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Status Updated Successfully.',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            customClass: {
+                                confirmButton: 'btn btn-primary'
+                            },
+                            buttonsStyling: false
+                        });
+                    }
+                });
+            }
+        });
 
     </script>
 

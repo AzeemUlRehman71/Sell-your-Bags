@@ -236,6 +236,13 @@ Route::group(['middleware' => 'auth'], function () {
             'as' => 'pos.product-item-tagged',
             //'middleware' => 'permission:show user'
         ]);
+
+        Route::get('/pos/update/product-status/{id}', [
+
+            'uses' => 'ClientController@updateProductStatus',
+            'as' => 'pos.product.status.update',
+            //'middleware' => 'permission:edit product'
+        ]);
         Route::get('/pos/{id}/view', [
 
             'uses' => 'ClientController@show',
@@ -303,6 +310,7 @@ Route::group(['middleware' => 'auth'], function () {
             'as' => 'client.update',
             //'middleware' => 'permission:edit product'
         ]);
+
     });
 });
 

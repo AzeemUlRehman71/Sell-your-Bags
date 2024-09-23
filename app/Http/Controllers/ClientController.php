@@ -55,12 +55,12 @@ class ClientController extends Controller
     {
         $statusList = @include(app_path('status.php'));
 
-        $limit = (int) $request->input('length');
-        $start = (int) $request->input('start');
+        $limit = (int)$request->input('length');
+        $start = (int)$request->input('start');
 
         $columns = $request->input('columns');
         $order = $columns[$request->input('order.0.column')]['data'];
-        $dir   = $request->input('order.0.dir');
+        $dir = $request->input('order.0.dir');
 
         $searchBy = $request->input('search.value');
 
@@ -68,19 +68,19 @@ class ClientController extends Controller
         if (!empty($searchBy)) {
             $list = Client::with('product')
                 ->withCount('updateLog')
-                ->where(function ($q) use($searchBy) {
+                ->where(function ($q) use ($searchBy) {
                     $q->where('name', 'like', '%' . $searchBy . '%')
-                    ->orWhere('email', 'like', '%' . $searchBy . '%')
-                    ->orWhere('tracking', 'like', '%' . $searchBy . '%')
-                    ->orWhere('po_number', 'like', '%' . $searchBy . '%')
-                    ->orWhere('client_status', 'like', '%' . $searchBy . '%')
-                    ->orWhere('user_create', 'like', '%' . $searchBy . '%')
-                    ->orWhere(function($q1) use($searchBy) {
-                        $q1->whereHas('product', function ($query) use ($searchBy) {
-                            $query->where('name', 'like', '%' . $searchBy . '%')
-                            ->orWhere('sku', 'like', '%' . $searchBy . '%');
+                        ->orWhere('email', 'like', '%' . $searchBy . '%')
+                        ->orWhere('tracking', 'like', '%' . $searchBy . '%')
+                        ->orWhere('po_number', 'like', '%' . $searchBy . '%')
+                        ->orWhere('client_status', 'like', '%' . $searchBy . '%')
+                        ->orWhere('user_create', 'like', '%' . $searchBy . '%')
+                        ->orWhere(function ($q1) use ($searchBy) {
+                            $q1->whereHas('product', function ($query) use ($searchBy) {
+                                $query->where('name', 'like', '%' . $searchBy . '%')
+                                    ->orWhere('sku', 'like', '%' . $searchBy . '%');
+                            });
                         });
-                    });
                 });
 
 
@@ -103,8 +103,8 @@ class ClientController extends Controller
         }
 
         $list = $list->skip($start)
-                ->take($limit)
-                ->get();
+            ->take($limit)
+            ->get();
 
         $data = [];
         foreach ($list as $item) {
@@ -114,7 +114,7 @@ class ClientController extends Controller
                 'name' => $item->name,
                 'product_name' => $item->product->implode('name', "\n"),
                 'created_at' => date('m-d-Y H:i:s', strtotime($item->created_at)),
-                'client_status' => '<span class="badge rounded-pill ' . (isset($statusList[$item->client_status]) ? $statusList[$item->client_status] : 'badge-light-secondary') . ' text-capitalized="">'. $item->client_status . '</span>',
+                'client_status' => '<span class="badge rounded-pill ' . (isset($statusList[$item->client_status]) ? $statusList[$item->client_status] : 'badge-light-secondary') . ' text-capitalized="">' . $item->client_status . '</span>',
                 'user_create' => $item->user_create,
                 'action_button' => '<button class="btn btn-sm btn-outline-primary" style="padding: 0.486rem .5rem;" onclick="showHistory(' . $item->id . ')" data-bs-toggle="tooltip" data-bs-placement="top" title="Update Log">' . $item->update_log_count . '</button>',
             ];
@@ -122,11 +122,11 @@ class ClientController extends Controller
 
 
         return json_encode([
-                "draw" => intval($request->draw),
-                "recordsTotal" => $recordsTotal,
-                "recordsFiltered" => $recordsFiltered,
-                'data' => $data,
-            ]);
+            "draw" => intval($request->draw),
+            "recordsTotal" => $recordsTotal,
+            "recordsFiltered" => $recordsFiltered,
+            'data' => $data,
+        ]);
     }
 
     public function all(Client $client)
@@ -150,7 +150,7 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreClientRequest  $request
+     * @param \App\Http\Requests\StoreClientRequest $request
      * @return \Illuminate\Http\Response
      */
 
@@ -261,6 +261,7 @@ class ClientController extends Controller
         }
         return '';
     }
+
     public function filepondDelete(Request $request)
     {
 
@@ -286,7 +287,6 @@ class ClientController extends Controller
             }
         }
     }
-
 
 
     public function filepondRestore(Request $request, string $id)
@@ -327,8 +327,8 @@ class ClientController extends Controller
         // ]);
 
 
-
     }
+
     public function store(Request $request)
     {
         $formNo = config('constants.options.Form_No');
@@ -388,7 +388,6 @@ class ClientController extends Controller
         $imageName = 'signature' . '_' . microtime() . '.' . $imageType;
         $file = $folderPath . $imageName;
         file_put_contents($file, $imageBase64);
-
 
 
         $tmp_file = TemporarayFile::where('folder', $request->id_card_image)->first();
@@ -476,7 +475,7 @@ class ClientController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Client  $client
+     * @param \App\Models\Client $client
      * @return \Illuminate\Http\Response
      */
     public function show($id, Client $client)
@@ -498,7 +497,7 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Client  $client
+     * @param \App\Models\Client $client
      * @return \Illuminate\Http\Response
      */
 
@@ -552,7 +551,7 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Client  $client
+     * @param \App\Models\Client $client
      * @return \Illuminate\Http\Response
      */
 
@@ -642,7 +641,7 @@ class ClientController extends Controller
     /**
      * Update a  resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateClientRequest  $request
+     * @param \App\Http\Requests\UpdateClientRequest $request
      * @return \Illuminate\Http\Response
      */
 
@@ -889,7 +888,7 @@ class ClientController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Client  $client
+     * @param \App\Models\Client $client
      * @return \Illuminate\Http\Response
      */
     public function destroy(Client $client)
@@ -934,33 +933,49 @@ class ClientController extends Controller
         return response()->json(0);
     }
 
-   public function tagged ($id) {
-      $client = Client::find($id);
-      if (!empty($client)) {
-         if ($client->tagged == 1) {
-            $client->tagged = 0;
-         } else {
-            $client->tagged = 1;
-         }
-         $client->save();
-      }
+    public function updateProductStatus($id,Request $request)
+    {
+        $product = Product::find($request->id);
 
-      return response()->json($client);
-   }
+        if ($product) {
+            $product->status = $request->status;
+            $product->save();
+            return response()->json(1);
 
-   public function taggedProductItem ($id) {
-      $product = Product::find($id);
-      if (!empty($product)) {
-         if ($product->tagged == 1) {
-            $product->tagged = 0;
-         } else {
-            $product->tagged = 1;
-         }
-         $product->save();
-      }
+        }
+        return response()->json(0);
+    }
 
-      return response()->json($product);
-   }
+    public function tagged($id)
+    {
+        $client = Client::find($id);
+        if (!empty($client)) {
+            if ($client->tagged == 1) {
+                $client->tagged = 0;
+            } else {
+                $client->tagged = 1;
+            }
+            $client->save();
+        }
+
+        return response()->json($client);
+    }
+
+    public function taggedProductItem($id,Request $request)
+    {
+        $product = Product::find($id);
+        if (!empty($product)) {
+//            if ($product->tagged == 1) {
+//                $product->tagged = 0;
+//            } else {
+//                $product->tagged = 1;
+//            }
+            $product->status = $request->status;
+            $product->save();
+        }
+
+        return response()->json(1);
+    }
 
     public function barcodePrint($id, Client $client)
     {
@@ -1007,7 +1022,8 @@ class ClientController extends Controller
         return response()->json($updateLogTables);
     }
 
-    public function generateSKU() {
+    public function generateSKU()
+    {
         $lastProduct = Product::orderBy('created_at', 'desc')
             ->orderBy('id', 'desc')
             ->first();
@@ -1093,26 +1109,26 @@ class ClientController extends Controller
 
         return response()->json([
             'first_inspection' => view('backend.client.modal._form_condition_report', [
-                    'productId' => $id,
-                    'title' => 'Customer Inspection',
-                    'formId' =>'first-inspection',
-                    'inspectionType' => 'first-inspection',
-                    'data' => $firstInspection
-                ])->render(),
+                'productId' => $id,
+                'title' => 'Customer Inspection',
+                'formId' => 'first-inspection',
+                'inspectionType' => 'first-inspection',
+                'data' => $firstInspection
+            ])->render(),
             'second_inspection' => view('backend.client.modal._form_condition_report', [
-                    'productId' => $id,
-                    'title' => 'Incoming Inspection',
-                    'formId' =>'second-inspection',
-                    'inspectionType' => 'second-inspection',
-                    'data' => $secondInspection
-                ])->render(),
+                'productId' => $id,
+                'title' => 'Incoming Inspection',
+                'formId' => 'second-inspection',
+                'inspectionType' => 'second-inspection',
+                'data' => $secondInspection
+            ])->render(),
             'third_inspection' => view('backend.client.modal._form_condition_report', [
-                    'productId' => $id,
-                    'title' => 'Listing Inspection',
-                    'formId' =>'third-inspection',
-                    'inspectionType' => 'third-inspection',
-                    'data' => $thirdInspection
-                ])->render()
+                'productId' => $id,
+                'title' => 'Listing Inspection',
+                'formId' => 'third-inspection',
+                'inspectionType' => 'third-inspection',
+                'data' => $thirdInspection
+            ])->render()
         ]);
     }
 
@@ -1134,14 +1150,13 @@ class ClientController extends Controller
             ->first();
 
         return response()->json([
-            'comparison_report' => view('backend.client.modal.condition_comparison_report',[
+            'comparison_report' => view('backend.client.modal.condition_comparison_report', [
                 'firstInspection' => $firstInspection,
                 'secondInspection' => $secondInspection,
                 'thirdInspection' => $thirdInspection,
             ])->render()
         ]);
     }
-
 
 
 }

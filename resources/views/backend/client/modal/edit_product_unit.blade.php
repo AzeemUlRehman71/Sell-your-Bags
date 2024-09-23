@@ -35,15 +35,17 @@
                                     <option value="Incoming Sent">Incoming Sent</option>--}}
 
                                     <option value="1.Label Sent">1.Label Sent</option>
-                                    <option value="2.Item Received/Delivered">2.Item Received/Delivered</option>
-                                    <option value="3.Under Discussion">3.Under Discussion</option>
-                                    <option value="4.Authentication in Progress">4.Authentication in Progress</option>
-                                    <option value="5.Authentication Completed">5.Authentication Completed</option>
-                                    <option value="6.Approved">6.Approved</option>
-                                    <option value="7.Rejected">7.Rejected</option>
-                                    <option value="8.Fake">8.Fake</option>
-                                    <option value="9.Returned to Sender">9.Returned to Sender</option>
-                                    <option value="10.Payment Completed">10.Payment Completed</option>
+                                    <option value="2.Under Discussion">2.Under Discussion</option>
+                                    <option value="3.Approved">3.Approved</option>
+                                    <option value="4.Returned to Sender">4.Returned to Sender</option>
+                                    <option value="5.Payment Completed">5.Payment Completed</option>
+
+{{--                                    <option value="2.Item Received/Delivered">2.Item Received/Delivered</option>--}}
+{{--                                    <option value="4.Authentication in Progress">4.Authentication in Progress</option>--}}
+{{--                                    <option value="5.Authentication Completed">5.Authentication Completed</option>--}}
+{{--                                    <option value="7.Rejected">7.Rejected</option>--}}
+{{--                                    <option value="8.Fake">8.Fake</option>--}}
+
 
                                 </select>
                             </div>
