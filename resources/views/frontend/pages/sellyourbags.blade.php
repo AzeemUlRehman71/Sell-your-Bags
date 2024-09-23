@@ -6,7 +6,7 @@
         </div>
     </div>
     <div class="row">
-        <form method="POST" action="{{ route('sellyourbags.store') }}" class="dropzone-area" id="clientform"
+        <form method="POST"  action="{{ route('sellyourbags.store') }}" class="dropzone-area" id="clientform"
               enctype="multipart/form-data">
             @csrf
             <div class="row">
@@ -73,12 +73,15 @@
 
                 <!-- </div> -->
             </div>
-            <div class="row">
+            <div class="row" id="product-information-section">
                 <div class="col-md-12 simple-heading-bg">
                     <h5 class="my-3 px-2 inside-head">PRODUCT INFORMATION</h5>
                 </div>
                 <div class="col-md-12 bg-white px-5">
                     {{-- <form> --}}
+
+                    <span id="add-condition-error" class="error" style="font-weight: bold;
+    font-size: 16px;"></span>
                     <div class="" id="dataAdd">
                         <div class="row my-3 abc">
                             <div class="col-md-4">
@@ -102,6 +105,7 @@
                                <input type="hidden" name="products[0]['condition']" id="condition_one_0" value="">
                                <input type="hidden" name="products[0]['condition_two']" id="condition_two_0" value="">
                                <input type="hidden" name="products[0]['condition_three']" id="condition_three_0" value="">
+                               <input type="hidden" name="products[0]['add_condition_add']" id="add_condition_add_0" value="false">
                             </div>
                             <div class="col-md-2">
                                 <input type="number" class="form-control productPrice" placeholder="$ 0.00" value=""

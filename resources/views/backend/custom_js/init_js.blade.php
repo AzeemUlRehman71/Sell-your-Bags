@@ -28,6 +28,8 @@
 
 
         var product_condtion = $(this).data('change_product_condition');
+        var product_condition_two = $(this).data('change_product_condition_two');
+        var product_condition_three = $(this).data('change_product_condition_three');
 
         var product_name = $(this).data('change_product_name');
 
@@ -46,6 +48,8 @@
 
         $('#edit_product_id_value').val(product_id);
         $('#productCondition_value').val(product_condtion);
+        $('#productConditionTwo_value').val(product_condition_two);
+        $('#productConditionThree_value').val(product_condition_three);
         $('#productName_value').val(product_name);
         $('#productPrice_value').val(product_price);
         // $('#product_image_value').val(product_image[0]);

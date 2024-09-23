@@ -96,6 +96,7 @@
                                <input type="hidden" name="products[` + i + `]['condition']" id="condition_one_` + i + `" value="">
                                <input type="hidden" name="products[` + i + `]['condition_two']" id="condition_two_` + i + `" value="">
                                <input type="hidden" name="products[` + i + `]['condition_three']" id="condition_three_` + i + `" value="">
+                                 <input type="hidden" name="products[` + i + `]['add_condition_add']" id="add_condition_add_` + i + `" value="false">
 
 
 
@@ -176,6 +177,7 @@
                 $('#condition_one_' + btnIndex).val(condition_one);
                 $('#condition_two_' + btnIndex).val(condition_two);
                 $('#condition_three_' + btnIndex).val(condition_three);
+                $('#add_condition_add_' + btnIndex).val(true);
                 $('#add_condition_'+btnIndex).text('Added');
                 $('#edit_unit').modal('hide');
             }
@@ -348,33 +350,56 @@
         });
 
         //show loading spinner while form submision
-        $(document).ready(function() {
-            $("#clientform").submit(function() {
+        $(document).ready(function () {
+            $("#clientform").submit(function () {
+                $('#add-condition-error').text('');
 //                $(".spinner-border").removeClass("d-none");
 //                $(".submit").attr("disabled", true);
 //                $(".btn-txt").text("Processing ...");
 
 
-		event.preventDefault();
-                if ($('#payment_direct_account_number').val() != $('#payment_direct_re_enter_account_number').val()) {
-			$('#re-enter-account-number-error').text('The Re-enter account number does not match.');
+                event.preventDefault();
 
-			//			swal('', "The Re-enter account number does not match.", 'warning');
+                var allTrue = true;
+
+                $('input[type="hidden"][id^="add_condition_add_"]').each(function() {
+                    if ($(this).val() !== "true") {
+                        allTrue = false;
+                        return false; // break the loop
+                    }
+                });
+
+                if (!allTrue) {
+                    event.preventDefault(); // prevent form submission if not all values are true
+                    $('html, body').animate({
+                        scrollTop: $('#product-information-section').offset().top
+                    }, 1000); // Adjust the speed (1000 ms = 1 second)
+                    $('#add-condition-error').text('All conditions must be added!');
+
+                }else{
+                    if ($('#payment_direct_account_number').val() != $('#payment_direct_re_enter_account_number').val()) {
+                        $('#re-enter-account-number-error').text('The Re-enter account number does not match.');
+
+                        //			swal('', "The Re-enter account number does not match.", 'warning');
 //			Swal.fire({
 //                        position: 'top-end',
 //                        icon: 'warning',
 //                        title: 'The Re-enter account number does not match.',
 //                    });
 
-			alert("The Re-enter account number does not match.");
-                } else {
-                    $(".spinner-border").removeClass("d-none");
-                    $(".submit").attr("disabled", true);
-                    $(".btn-txt").text("Processing ...");
+                        alert("The Re-enter account number does not match.");
+                    } else {
+                        $(".spinner-border").removeClass("d-none");
+                        $(".submit").attr("disabled", true);
+                        $(".btn-txt").text("Processing ...");
 
-                    this.submit();
+                        this.submit();
+                    }
                 }
-	    });
+
+
+
+            });
 
             //auto fill the Payment fields from client name and email address
             $(document).ready(function() {

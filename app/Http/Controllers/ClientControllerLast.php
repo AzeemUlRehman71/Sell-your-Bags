@@ -29,12 +29,12 @@ class ClientController extends Controller
     {
         // $list = Client::with('product')
         // ->orderBy('po_number','desc')
-        // ->get(); 
-          //  dd($list);        
-    
+        // ->get();
+          //  dd($list);
+
         // return view('backend.client.index', [
         // 'list' => $list
-       
+
         // ]);
         return view('backend.client.index', [
             'list' => $client->getAllClientsWithProducts()
@@ -59,7 +59,7 @@ class ClientController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(StoreClientRequest $request)
-    {   
+    {
 
       // dd($request->products[0]["'name'"]);
         $formNo = config('constants.options.Form_No');
@@ -68,7 +68,7 @@ class ClientController extends Controller
         if($clientsCount > 0) {
 
            $clientLast =Client::orderBy('po_number', 'desc')->first();
-            $lastPo = $clientLast->po_number; 
+            $lastPo = $clientLast->po_number;
             $poNumberNext =$lastPo +1;
 
         }
@@ -80,7 +80,7 @@ class ClientController extends Controller
 
         $input =$request->all();
        $file = $request->file('productImage');
-   
+
         $ids = $request->productName;
         $validated = $request->validated();
         if($request->has('id_card_image')) {
@@ -98,9 +98,9 @@ class ClientController extends Controller
 
                 $realPath ='';
             }
-     
+
             if($request->payment_method=='direct'){
-            
+
                 $payment_name = $request->payment_full_name;
                 $payment_email =$request->payment_email;
                 $payment_direct_phone_number =$request->payment_direct_phone_number;
@@ -108,12 +108,12 @@ class ClientController extends Controller
                 $payment_direct_routing_number =$request->payment_direct_routing_number;
                 $payment_direct_account_type =$request->payment_direct_account_type;
                 $payment_direct_bank_name =$request->payment_direct_bank_name;
-                
+
             }
             if($request->payment_method=='paypal')
             {
                 $payment_name =$request->payment_name_paypal;
-                $payment_email =$request->payment_email_paypal;   
+                $payment_email =$request->payment_email_paypal;
             }
             if($request->payment_method=='cheque')
             {
@@ -137,7 +137,7 @@ class ClientController extends Controller
         $file = $folderPath . $imageName;
 	    file_put_contents($file, $imageBase64);
 
-      
+
          $client = new Client();
 
         $client->name =$request->input('name');
@@ -152,7 +152,7 @@ class ClientController extends Controller
         $client->payment_direct_account_number =$payment_direct_account_number ?? null;
         $client->payment_direct_routing_number =$payment_direct_routing_number ?? null;
         $client->payment_direct_account_type =$payment_direct_account_type ?? null;
-        $client->payment_direct_bank_name =$payment_direct_bank_name ?? null;    
+        $client->payment_direct_bank_name =$payment_direct_bank_name ?? null;
         $client->client_status='Pending';
         $client->total_amount = $request->input('grand_total');
         $client->signature =$imageName;
@@ -164,16 +164,16 @@ class ClientController extends Controller
         $lastId = $client->id;
         $newPo =$client->po_number;
         $condition = $request->productImage;
-    
+
         $products = $request->products;
-          
+
                 foreach($products as  $product)
                 {
-                  
+
                      if((!empty($product["'image'"]))) {
 
                        $images = $product["'image'"];
-                       
+
                         $originalImage= $images;
 
                         $thumbnailImage = Image::make($originalImage);
@@ -192,28 +192,28 @@ class ClientController extends Controller
                         $realPath='';
 
                     }
-                
+
                                $productNew = new Product();
-                                       
+
                                    $productNew->name = $product["'name'"] ?? '';;
                                    $productNew->condition = $product["'condition'"] ?? '';
                                    $productNew->price = $product["'price'"];
                                    $productNew->client_id =$lastId;
                                    $productNew->image_path = $realPath ?? '';
-                                   
+
                                    $productNew->save();
-                             
-         
+
+
                 }
 
-        
 
-      
 
-       
-   
-               
-          
+
+
+
+
+
+
            $clientDetails = Client::with('product')->find($lastId);
 
            //dd($clientDetails);
@@ -222,22 +222,22 @@ class ClientController extends Controller
            //foreach method to send emails
 
         //    Mail::to($request->input('email')
-        //    ->cc(['gulmuhammad57@yahoo.com'])  
+        //    ->cc(['gulmuhammad57@yahoo.com'])
         //    )->send(new ThankYou($clientDetails));
 
-        //Gul here sending emails in this way was taking time 
-        //so we I used Queue mathod to send emails which is below 
+        //Gul here sending emails in this way was taking time
+        //so we I used Queue mathod to send emails which is below
         //   foreach ([$request->input('email'), 'gulmuhammad57@yahoo.com'] as $recipient) {
 
         //    Mail::to($recipient)->send(new ThankYou($clientDetails));
 
-         
+
 
 
         //     }
 
-       
-            
+
+
          //This method is used to dispatch emails Gul here
             SendPoEmail::dispatch($clientDetails);
            return redirect()->route('sellyourbags.thankyou', ['id' => $lastId,'po' => $newPo]);
@@ -266,11 +266,11 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-   
+
     public function editProductUnit(Request $request)
     {
 
-       
+
         $this->validate($request, [
 
             'edit_product_id' => 'required',
@@ -279,11 +279,11 @@ class ClientController extends Controller
 
         DB::beginTransaction();
         try {
-      
+
           $client = Client::where('id',$request->edit_product_id)->first();
 
           Client::where('id', $client->id)->update([
-  
+
               'client_status' => $request->client_status
           ]);
 
@@ -305,7 +305,7 @@ class ClientController extends Controller
      * @param  \App\Models\Client  $client
      * @return \Illuminate\Http\Response
      */
-   
+
     public function editProductDetails(Request $request)
     {
         //dd($request->edit_product_id_value);
@@ -321,11 +321,11 @@ class ClientController extends Controller
 
           $product = Product::where('id',$request->edit_product_id_value)->first();
 
-          
+
           $client = Client::where('id',$request->client_id_value)->first();
 
             if($request->hasFile('productImage_value')) {
-               
+
                 $originalImage= $request->file('productImage_value');
                 $thumbnailImage = Image::make($originalImage);
                 $thumbnailPath = public_path().'/products/';
@@ -335,11 +335,13 @@ class ClientController extends Controller
                 $thumbnailImage->save($thumbnailPath.time().$originalImage->getClientOriginalName());
                 $realPath =time().$originalImage->getClientOriginalName();
 
-                
+
             }
             Product::where('id', $product->id)->update([
-  
+
                 'condition' => $request->productCondition ?? null,
+                'condition_two' => $request->productConditionTwo ?? null,
+                'condition_three' => $request->productConditionThree ?? null,
                 'price' => $request->productPrice_value,
                 'name' => $request->productName ?? null,
                 'image_path' => $realPath ?? $request->product_image_value
@@ -355,19 +357,19 @@ class ClientController extends Controller
 
         }
         //dd($sum);
-          
+
         //   Client::where('id', $client->id)->update([
-  
+
         //       'total_amount' => $request->newTotal ?? $request->total_amount_value
         //   ]);
         Client::where('id', $client->id)->update([
-  
+
             'total_amount' => $sum,
         ]);
 
-        
 
-        
+
+
 
             DB::commit();
 
@@ -388,27 +390,27 @@ class ClientController extends Controller
             return view('backend/client/edit',['clientDetails' =>$clientDetails]);
 
 
-            
+
         }
-    
+
     /**
      * Update a  resource in storage.
      *
      * @param  \App\Http\Requests\UpdateClientRequest  $request
      * @return \Illuminate\Http\Response
-     */    
+     */
 
     public function update(UpdateClientRequest $request, $id)
     {
-      
+
        // dd($request->signature64);
          DB::beginTransaction();
          try {
- 
+
            $client = Client::where('id',$request->id)->first();
- 
+
            if($request->has('id_card_image')) {
-   
+
             $originalImage= $request->file('id_card_image');
             $thumbnailImage = Image::make($originalImage);
             $thumbnailPath = public_path().'/idcard/';
@@ -417,9 +419,9 @@ class ClientController extends Controller
             $thumbnailImage->resize(400,200);
             $thumbnailImage->save($thumbnailPath.time().$originalImage->getClientOriginalName());
             $realPath =time().$originalImage->getClientOriginalName();
-               
+
             Client::where('id', $client->id)->update([
-                'id_card_image' => $realPath,  
+                'id_card_image' => $realPath,
             ]);
 
 
@@ -438,9 +440,9 @@ class ClientController extends Controller
             }
           //  dd('no');
           //  dd($request->oldsignature);
- 
+
            Client::where('id', $client->id)->update([
-   
+
                'name' => $request->name,
                'email' => $request->email,
                'phone' => $request->phone,
@@ -452,18 +454,18 @@ class ClientController extends Controller
                'payment_direct_account_number' =>$request->payment_direct_account_number ?? null,
                'payment_direct_routing_number' =>$request->payment_direct_routing_number ?? null,
                'payment_direct_account_type' =>$request->payment_direct_account_type ?? null,
-               'payment_direct_bank_name' =>$request->payment_direct_bank_name ?? null,  
+               'payment_direct_bank_name' =>$request->payment_direct_bank_name ?? null,
                'signature' =>$imageName ?? $request->oldsignature,
            ]);
- 
+
              DB::commit();
- 
+
              return redirect()->back()->with('clientdetailsupdated', __('Client Details Updated Successfully'));
          } catch (\Exception $e) {
             dd($e);
- 
+
              DB::rollback();
- 
+
              return redirect()->back()->with('danger', __('Something went Wrong'));
          }
     }

@@ -137,13 +137,20 @@ so the only way to nest form insdie a form is Modal Popup --}}
                      </td>
 
                      <td>{{ $item->name }}</td>
-                     <td>{{ $item->condition }}</td>
+                     <td> <ul>
+                             <li><b>Overall Condition :</b> {{ $item->condition }}</li>
+                             <li><b>Smell:</b> {{ $item->condition_two }}</li>
+                             <li><b>Corners Rubbing:</b> {{ $item->condition_three }}</li>
+                         </ul>
+                     </td>
                      <td>{{ $item->price }}</td>
                      <td class="">
                         <div class="d-flex text-center align-middle">
                            <a class="btn btn-sm btn-edit edit_product_details" data-bs-toggle="modal"
                               data-bs-target="#edit_product_details" data-change_product_id="{{ $item->id }}"
                               data-change_product_condition="{{ $item->condition }}"
+                              data-change_product_condition_two="{{ $item->condition_two }}"
+                              data-change_product_condition_three="{{ $item->condition_three }}"
                               data-change_product_name="{{ $item->name }}"
                               data-change_product_price="{{ $item->price }}"
                               data-change_product_image="{{ $item->image_path }}"

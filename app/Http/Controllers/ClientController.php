@@ -600,6 +600,8 @@ class ClientController extends Controller
             Product::where('id', $product->id)->update([
 
                 'condition' => $request->productCondition ?? null,
+                'condition_two' => $request->productConditionTwo ?? null,
+                'condition_three' => $request->productConditionThree ?? null,
                 'price' => $request->productPrice_value,
                 'name' => $request->productName ?? null,
                 // 'image_path' => count($images) ? json_encode($images) : $product->image_path
