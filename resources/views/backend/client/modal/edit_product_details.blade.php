@@ -35,8 +35,10 @@
                                 <select class="form-select shadow-none" aria-label="Default select example"
                                         name="productConditionTwo" id="productConditionTwo_value">
                                     <option value="">Please Select</option>
-                                    <option value="Yes">Yes</option>
                                     <option value="No">No</option>
+                                    <option value="Minor">Minor</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Major">Major</option>
                                 </select>
                             </div>
                             <div class="col-md-12">
@@ -45,7 +47,6 @@
                                         name="productConditionThree" id="productConditionThree_value">
                                     <option value="No">No</option>
                                     <option value="Minor">Minor</option>
-                                    <option value="Medium">Medium</option>
                                     <option value="Major">Major</option>
 
                                 </select>

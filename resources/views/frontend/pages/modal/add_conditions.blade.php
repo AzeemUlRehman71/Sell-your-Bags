@@ -29,8 +29,10 @@
                                 <label class="form-label">Smell</label>
                                 <select class="form-select shadow-none" aria-label="Default select example" id="productConditionTwo">
                                     <option value="">Please Select</option>
-                                    <option value="Yes">Yes</option>
                                     <option value="No">No</option>
+                                    <option value="Minor">Minor</option>
+                                    <option value="Medium">Medium</option>
+                                    <option value="Major">Major</option>
 
                                 </select>
                                 <span style="color:red" id="condition_two_error"></span>
@@ -41,7 +43,6 @@
                                     <option value="">Please Select</option>
                                     <option value="No">No</option>
                                     <option value="Minor">Minor</option>
-                                    <option value="Medium">Medium</option>
                                     <option value="Major">Major</option>
 
                                 </select>
