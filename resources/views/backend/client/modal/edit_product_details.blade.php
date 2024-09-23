@@ -45,6 +45,7 @@
                                         name="productConditionThree" id="productConditionThree_value">
                                     <option value="No">No</option>
                                     <option value="Minor">Minor</option>
+                                    <option value="Medium">Medium</option>
                                     <option value="Major">Major</option>
 
                                 </select>

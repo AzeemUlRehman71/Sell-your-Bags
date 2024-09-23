@@ -41,6 +41,7 @@
                                     <option value="">Please Select</option>
                                     <option value="No">No</option>
                                     <option value="Minor">Minor</option>
+                                    <option value="Medium">Medium</option>
                                     <option value="Major">Major</option>
 
                                 </select>
