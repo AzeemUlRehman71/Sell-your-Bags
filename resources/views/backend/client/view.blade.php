@@ -230,7 +230,7 @@
                                                 </ul>
                                             </td>
                                             <td>{{ $item->price }}</td>
-                                            <td class="text-center" style="width: 23%;">
+                                            <td class="text-center">
 
                                                 <select class="form-select shadow-none" data-product-id="{{$item->id}}"
                                                         aria-label="Default select example"
@@ -247,6 +247,7 @@
                                                     <option value="Rejected" {{ $item->status === 'Rejected' ? 'selected' : '' }}>Rejected</option>
                                                     <option value="Fake" {{ $item->status === 'Fake' ? 'selected' : '' }}>Fake</option>
                                                     <option value="Item Returned" {{ $item->status === 'Item Returned' ? 'selected' : '' }}>Item Returned</option>
+                                                    <option value="Item Not Received" {{ $item->status === 'Item Not Received' ? 'selected' : '' }}>Item Not Received</option>
 
                                                 </select>
 {{--                                                <input type="checkbox"--}}

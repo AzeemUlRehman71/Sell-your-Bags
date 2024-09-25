@@ -162,6 +162,7 @@ so the only way to nest form insdie a form is Modal Popup --}}
                               <option value="Rejected" {{ $item->status === 'Rejected' ? 'selected' : '' }}>Rejected</option>
                               <option value="Fake" {{ $item->status === 'Fake' ? 'selected' : '' }}>Fake</option>
                               <option value="Item Returned" {{ $item->status === 'Item Returned' ? 'selected' : '' }}>Item Returned</option>
+                              <option value="Item Not Received" {{ $item->status === 'Item Not Received' ? 'selected' : '' }}>Item Not Received</option>
 
                           </select>
                           {{--                                                <input type="checkbox"--}}
