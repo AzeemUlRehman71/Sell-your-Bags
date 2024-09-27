@@ -35,10 +35,12 @@
                                     <option value="Incoming Sent">Incoming Sent</option>--}}
 
                                     <option value="1.Label Sent">1.Label Sent</option>
-                                    <option value="2.Under Discussion">2.Under Discussion</option>
-                                    <option value="3.Approved">3.Approved</option>
-                                    <option value="4.Returned to Sender">4.Returned to Sender</option>
-                                    <option value="5.Payment Completed">5.Payment Completed</option>
+                                    <option value="2.Shipment Received">2.Shipment Received</option>
+                                    <option value="3.Under Discussion">3.Under Discussion</option>
+                                    <option value="4.Approved">4.Approved</option>
+                                    <option value="5.Return to Sender">5.Return to Sender</option>
+                                    <option value="6.Payment Completed">6.Payment Completed</option>
+                                    <option value="7.Cancelled">7.Cancelled</option>
 
 {{--                                    <option value="2.Item Received/Delivered">2.Item Received/Delivered</option>--}}
 {{--                                    <option value="4.Authentication in Progress">4.Authentication in Progress</option>--}}
